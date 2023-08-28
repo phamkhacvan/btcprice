@@ -16,7 +16,7 @@
 {
     "functions": {
       "api/my_function": {
-        "runtime": "python3.8"
+        "runtime": "python3"
       }
     }
   }
