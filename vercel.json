@@ -13,11 +13,4 @@
         }
     ]
 }
-{
-    "functions": {
-      "api/my_function": {
-        "runtime": "python3"
-      }
-    }
-  }
   
