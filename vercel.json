@@ -1,15 +1,23 @@
+// {
+//     "version": 2,
+//     "builds": [
+//         {
+//             "src": "btcprice.py",
+//             "use": "@vercel/python"
+//         }
+//     ],
+//     "routes": [
+//         {
+//             "src": "/btcprice.py",
+//             "dest": "/btcprice.py"
+//         }
+//     ]
+// }
 {
-    "version": 2,
-    "builds": [
-        {
-            "src": "btcprice.py",
-            "use": "@vercel/python"
-        }
-    ],
-    "routes": [
-        {
-            "src": "/btcprice.py",
-            "dest": "/btcprice.py"
-        }
-    ]
-}
+    "functions": {
+      "api/my_function": {
+        "runtime": "python3.8"
+      }
+    }
+  }
+  
