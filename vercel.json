@@ -1,16 +1,28 @@
-{
-    "version": 2,
-    "builds": [
-        {
-            "src": "btcprice.py",
-            "use": "@vercel/python"
-        }
-    ],
-    "routes": [
-        {
-            "src": "/btcprice.py",
-            "dest": "/btcprice.py"
-        }
-    ]
-}
+// {
+//     "version": 2,
+//     "builds": [
+//         {
+//             "src": "btcprice.py",
+//             "use": "@vercel/python"
+//         }
+//     ],
+//     "routes": [
+//         {
+//             "src": "/btcprice.py",
+//             "dest": "/btcprice.py"
+//         }
+//     ]
+// }
+
+# my_function.py
+
+import json
+
+def handler(event, context):
+    return {
+        'statusCode': 200,
+        'body': json.dumps({'message': 'Hello from Vercel Serverless Function'})
+    }
+
+
   
