@@ -23,6 +23,18 @@ def get_binance_price(symbol="BTCUSDT"):
         print(f"Lỗi khi lấy giá: {e}")
         return None
 
+# Tạo một route để hiển thị thông tin giá Bitcoin trên trang web
+@app.route('/')
+def display_bitcoin_price():
+    bitcoin_price = get_binance_price()
+    return render_template('btcprice2.html', bitcoin_price=bitcoin_price)
+# Tạo một route để trả về giá Bitcoin dưới dạng JSON
+@app.route('/get_bitcoin_price')
+def get_bitcoin_price_json():
+    bitcoin_price = get_binance_price()
+    return {'bitcoin_price': bitcoin_price}
+
+
 async def main():
     symbol = "BTCUSDT"  # Mã giao dịch BTC/USDT
     while True:
@@ -33,15 +45,9 @@ async def main():
             await bot.send_message(chat_id=chat_id, text=message)  # Gửi thông báo trên Telegram
         time.sleep(1)  # Giá này nhìn nhiều sẽ bị say sóng :)))
 
-# Tạo một route để hiển thị thông tin giá Bitcoin trên trang web
-@app.route('/')
-def display_bitcoin_price():
-    bitcoin_price = get_binance_price()
-    return render_template('index.html', bitcoin_price=bitcoin_price)
-
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
-    loop.run_until_complete(main())
-
-if __name__ == "__main__":
+    loop.create_task(main())  # Tạo một task asyncio cho hàm main()
+    
+    # Chạy Flask trong luồng chính của chương trình
     app.run(debug=True)
