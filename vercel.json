@@ -9,7 +9,7 @@
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "btcprice2.py"
+            "dest": "/btcprice2.py"
         }
     ]
 }
