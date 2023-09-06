@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Remove Date Picker Placeholder</title>
+</head>
+<body>
+    <label for="datepicker">Select a Date:</label>
+    <input type="date" id="datepicker" placeholder="">
+
+    <script>
+        // Get the date input element
+        const datepicker = document.getElementById('datepicker');
+
+        // Remove the placeholder attribute
+        datepicker.removeAttribute('placeholder');
+
+        // Remove the placeholder text when the input is clicked
+        datepicker.addEventListener('click', function() {
+            datepicker.value = '';
+        });
+    </script>
+</body>
+</html>
