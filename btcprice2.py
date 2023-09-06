@@ -1,13 +1,13 @@
 import requests
 import json
 import time
-from telegram import Bot
+# from telegram import Bot
 from flask import Flask, render_template
 
 app = Flask(__name__)
 
-bot = Bot(token="YOUR_BOT_TOKEN")
-chat_id = "YOUR_CHAT_ID"
+# bot = Bot(token="YOUR_BOT_TOKEN")
+# chat_id = "YOUR_CHAT_ID"
 
 def get_binance_price(symbol="BTCUSDT"):
     base_url = "https://api.binance.com/api/v3/ticker/price"
