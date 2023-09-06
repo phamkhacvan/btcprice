@@ -10,7 +10,7 @@ app = Flask(__name__)
 # chat_id = "YOUR_CHAT_ID"
 
 def get_binance_price(symbol="BTCUSDT"):
-    base_url = "https://api.binance.com/api/v3/ticker/price"
+    base_url = "https://data.binance.com/api/v3/ticker/price"
     params = {"symbol": symbol}
     
     try:
