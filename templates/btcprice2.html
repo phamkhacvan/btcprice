@@ -49,6 +49,9 @@
     <h1>Giá Bitcoin (BTC/USDT)</h1>
     <p id="bitcoin-price">Loading...</p>
 
+    <h1>Giá Etherium (ETH/USDT)</h1>
+    <p id="etherium_price">Loading...</p>
+
     <script>
         // Hàm để làm mới giá Bitcoin và cập nhật nội dung trang web
         function refreshBitcoinPrice() {
@@ -67,9 +70,26 @@
                     document.getElementById('bitcoin-price').textContent = 'Không thể lấy dữ liệu';
                 });
         }
+        function refreshEtheriumPrice() {
+            // Gọi API hoặc thực hiện các thao tác để lấy giá mới
+            // Đoạn mã này cần sửa đổi để phù hợp với nguồn dữ liệu của bạn
+            fetch('/get_etherium_price')  // URL này phải phù hợp với route của bạn trong Flask
+                .then(response => response.json())
+                .then(data => {
+                    const etheriumPrice = data.etherium_price;
+                    // Định dạng giá Bitcoin
+                    const formattedPrice = etheriumPrice.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                    document.getElementById('etherium_price').textContent = `Giá Etherium (ETH/USDT): ${formattedPrice} USDT`;
+                })
+                .catch(error => {
+                    console.error('Lỗi khi lấy giá Etherium:', error);
+                    document.getElementById('etherium_price').textContent = 'Không thể lấy dữ liệu';
+                });
+        }
 
         // Gọi hàm làm mới giá Bitcoin sau một khoảng thời gian
         setInterval(refreshBitcoinPrice, 1000); // Làm mới mỗi giây
+        setInterval(refreshEtheriumPrice, 1000); // Làm mới mỗi giây
     </script>
 </body>
 </html>
