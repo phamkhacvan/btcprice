@@ -1,49 +1,18 @@
-<!-- <!DOCTYPE html>
-<html>
-<head>
-    <title>Giá Bitcoin</title>
-</head>
-<body>
-    <h1>Giá Bitcoin (BTC/USDT)</h1>
-    <p>{{ bitcoin_price }} USDT</p>
-</body>
-</html> -->
-<!-- <!DOCTYPE html>
-<html>
-<head>
-    <title>Giá Bitcoin</title>
-</head>
-<body>
-    <h1>Giá Bitcoin (BTC/USDT)</h1>
-    <p id="bitcoin-price">Loading...</p>
-
-    <script>
-        // Hàm để làm mới giá Bitcoin và cập nhật nội dung trang web
-        function refreshBitcoinPrice() {
-            // Gọi API hoặc thực hiện các thao tác để lấy giá mới
-            // Đoạn mã này cần sửa đổi để phù hợp với nguồn dữ liệu của bạn
-            fetch('/get_bitcoin_price')  // URL này phải phù hợp với route của bạn trong Flask
-                .then(response => response.json())
-                .then(data => {
-                    const bitcoinPrice = data.bitcoin_price;
-                    document.getElementById('bitcoin_price').textContent = `Giá Bitcoin (BTC/USDT): ${bitcoinPrice} USDT`;
-                })
-                .catch(error => {
-                    console.error('Lỗi khi lấy giá Bitcoin:', error);
-                    document.getElementById('bitcoin_price').textContent = 'Không thể lấy dữ liệu';
-                });
-        }
-
-        // Gọi hàm làm mới giá Bitcoin sau một khoảng thời gian
-        setInterval(refreshBitcoinPrice, 1000); // Ví dụ: làm mới mỗi 5 giây
-    </script>
-</body>
-</html> -->
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>Giá Bitcoin</title>
+    <style>
+        .green {
+          color: green;
+        }
+      
+        .red {
+          color: red;
+        }
+      </style>
+      <link rel="stylesheet" href="./style.css">
 </head>
 <body>
     <h1>Giá Bitcoin (BTC/USDT)</h1>
@@ -54,38 +23,70 @@
 
     <script>
         // Hàm để làm mới giá Bitcoin và cập nhật nội dung trang web
-        function refreshBitcoinPrice() {
-            // Gọi API hoặc thực hiện các thao tác để lấy giá mới
-            // Đoạn mã này cần sửa đổi để phù hợp với nguồn dữ liệu của bạn
-            fetch('/get_bitcoin_price')  // URL này phải phù hợp với route của bạn trong Flask
-                .then(response => response.json())
-                .then(data => {
-                    const bitcoinPrice = data.bitcoin_price;
-                    // Định dạng giá Bitcoin
-                    const formattedPrice = bitcoinPrice.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                    document.getElementById('bitcoin-price').textContent = `Giá Bitcoin (BTC/USDT): ${formattedPrice} USDT`;
-                })
-                .catch(error => {
-                    console.error('Lỗi khi lấy giá Bitcoin:', error);
-                    document.getElementById('bitcoin-price').textContent = 'Không thể lấy dữ liệu';
-                });
+    function refreshBitcoinPrice() {
+            fetch('/get_bitcoin_price')
+            .then(response => response.json())
+            .then(data => {
+                const bitcoinPrice = data.bitcoin_price;
+                const bitcoinPriceElement = document.getElementById('bitcoin-price');
+                
+                // Định dạng giá Bitcoin
+                const formattedPrice = bitcoinPrice.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                bitcoinPriceElement.textContent = `Giá Bitcoin (BTC/USDT): ${formattedPrice} USDT`;
+
+                // Kiểm tra sự thay đổi giá và thêm CSS class tương ứng
+                if (bitcoinPrice > previousBitcoinPrice) {
+                    bitcoinPriceElement.classList.remove('red');
+                    bitcoinPriceElement.classList.add('green');
+                } else if (bitcoinPrice < previousBitcoinPrice) {
+                    bitcoinPriceElement.classList.remove('green');
+                    bitcoinPriceElement.classList.add('red');
+                }
+
+                // Lưu giá trị trước đó để so sánh
+                previousBitcoinPrice = bitcoinPrice;
+            })
+            .catch(error => {
+                console.error('Lỗi khi lấy giá Bitcoin:', error);
+                document.getElementById('bitcoin-price').textContent = 'Không thể lấy dữ liệu';
+            });
         }
-        function refreshEtheriumPrice() {
-            // Gọi API hoặc thực hiện các thao tác để lấy giá mới
-            // Đoạn mã này cần sửa đổi để phù hợp với nguồn dữ liệu của bạn
-            fetch('/get_etherium_price')  // URL này phải phù hợp với route của bạn trong Flask
-                .then(response => response.json())
-                .then(data => {
-                    const etheriumPrice = data.etherium_price;
-                    // Định dạng giá Bitcoin
-                    const formattedPrice = etheriumPrice.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-                    document.getElementById('etherium_price').textContent = `Giá Etherium (ETH/USDT): ${formattedPrice} USDT`;
-                })
-                .catch(error => {
-                    console.error('Lỗi khi lấy giá Etherium:', error);
-                    document.getElementById('etherium_price').textContent = 'Không thể lấy dữ liệu';
-                });
-        }
+
+// Khởi tạo giá trị trước đó
+let previousBitcoinPrice = 0;
+
+function refreshEtheriumPrice() {
+    fetch('/get_etherium_price')
+        .then(response => response.json())
+        .then(data => {
+            const etheriumPrice = data.etherium_price;
+            const etheriumPriceElement = document.getElementById('etherium_price'); // Sửa đổi tên biến này
+
+            // Định dạng giá Etherium
+            const formattedPrice = etheriumPrice.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            etheriumPriceElement.textContent = `Giá Etherium (ETH/USDT): ${formattedPrice} USDT`;
+
+            // Kiểm tra sự thay đổi giá và thêm CSS class tương ứng
+            if (etheriumPrice > previousEtheriumPrice) {
+                etheriumPriceElement.classList.remove('red');
+                etheriumPriceElement.classList.add('green');
+            } else if (etheriumPrice < previousEtheriumPrice) {
+                etheriumPriceElement.classList.remove('green');
+                etheriumPriceElement.classList.add('red');
+            }
+
+            // Cập nhật giá trị trước đó để so sánh
+            previousEtheriumPrice = etheriumPrice;
+        })
+        .catch(error => {
+            console.error('Lỗi khi lấy giá Etherium:', error);
+            document.getElementById('etherium_price').textContent = 'Không thể lấy dữ liệu';
+        });
+}
+
+// Khởi tạo giá trị trước đó
+let previousEtheriumPrice = 0;
+
 
         // Gọi hàm làm mới giá Bitcoin sau một khoảng thời gian
         setInterval(refreshBitcoinPrice, 1000); // Làm mới mỗi giây
