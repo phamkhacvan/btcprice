@@ -2,24 +2,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Giá Bitcoin</title>
+    <title>Giá Bitcoin và Ethereum</title>
     <style>
+
+        *{
+            
+        }
+        .container {
+            display: flex; /* Sử dụng flexbox để sắp xếp ngang */
+            justify-content: space-between; /* Cách đều hai phần tử bên trong */
+            align-items: center; /* Canh giữa theo chiều dọc */
+            /* background: linear-gradient(92.55deg, rgba(0, 255, 225, 0.1) -16.31%, rgba(0, 166, 255, 0.1) 41.79%, rgba(255, 102, 183, 0.1) 98.69%); */
+        }
+
+        .btc, .eth {
+            flex-basis: 90%; /* Chỉ định kích thước cố định cho mỗi phần tử */
+            text-align: center; /* Canh giữa nội dung ngang */
+            
+        }
+
+        .bitcoin-price {
+            font-size: 20px;
+        }
+
         .green {
-          color: green;
+            color: green;
         }
-      
+
         .red {
-          color: red;
+            color: red;
         }
-      </style>
-      <link rel="stylesheet" href="./style.css">
+    </style>
 </head>
 <body>
-    <h1>Giá Bitcoin (BTC/USDT)</h1>
-    <p id="bitcoin-price">Loading...</p>
-
-    <h1>Giá Etherium (ETH/USDT)</h1>
-    <p id="etherium_price">Loading...</p>
+    <div class="container">
+        <div class="btc">
+            <h1 class="btc">Giá Bitcoin (BTC/USDT) - Realtime</h1>
+            <p id="bitcoin-price">Loading...</p>
+        </div>
+        <div class="eth">
+            <h1 class="eth">Giá Ethereum (ETH/USDT) - Realtime</h1>
+            <p id="etherium_price">Loading...</p>
+        </div>
+    </div>
+        
 
     <script>
         // Hàm để làm mới giá Bitcoin và cập nhật nội dung trang web
