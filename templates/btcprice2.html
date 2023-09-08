@@ -5,18 +5,28 @@
     <title>Giá Bitcoin và Ethereum</title>
     <style>
 
-    
+        html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+            }
         .container {
             display: flex; /* Sử dụng flexbox để sắp xếp ngang */
             justify-content: space-between; /* Cách đều hai phần tử bên trong */
             align-items: center; /* Canh giữa theo chiều dọc */
-            /* background: linear-gradient(92.55deg, rgba(0, 255, 225, 0.1) -16.31%, rgba(0, 166, 255, 0.1) 41.79%, rgba(255, 102, 183, 0.1) 98.69%); */
+            margin: 0px;
+            width: 100%;
+            height: 100%;
+            /* background-color: antiquewhite; */
+
+            background: linear-gradient(92.55deg, rgba(0, 255, 225, 0.1) -16.31%, rgba(0, 166, 255, 0.1) 41.79%, rgba(255, 102, 183, 0.1) 98.69%);
         }
 
         .btc, .eth {
             flex-basis: 90%; /* Chỉ định kích thước cố định cho mỗi phần tử */
             text-align: center; /* Canh giữa nội dung ngang */
-            
+            justify-content: center;
         }
 
         .bitcoin-price {
