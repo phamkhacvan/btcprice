@@ -30,7 +30,7 @@ async def send_price_message():
         message = f"Giá Bitcoin: {bitcoin_price}"
         # message = f"Giá Bitcoin: {bitcoin_price}  \nGiá Ethereum: {etherium_price}"
         await bot.send_message(chat_id=chat_id, text=message)
-        await asyncio.sleep(10)  # Sử dụng asyncio.sleep để không chặn luồng
+        await asyncio.sleep(60)  # Sử dụng asyncio.sleep để không chặn luồng
 
 # Tạo một luồng riêng biệt để chạy coroutine send_price_message
 def run_send_price_message():
