@@ -1,3 +1,4 @@
+
 import requests
 import json
 import time
@@ -5,14 +6,19 @@ from telegram import Bot
 from flask import Flask, render_template
 import asyncio
 import threading
+from datetime import datetime
 
 app = Flask(__name__)
 
 bot = Bot(token="6163331718:AAG7J467TQi53Xie1b9nAnnRP4sbJmlhiOY")
 chat_id = "974909109"
 
+# Biến global để lưu giá Bitcoin từ mốc 0:00
+bitcoin_price_0_am = None
+previous_bitcoin_price = None
+
 def get_binance_price(symbol="BTCUSDT"):
-    base_url = "https://data.binance.com/api/v3/ticker/price"
+    base_url = "https://api.binance.com/api/v3/ticker/price"
     params = {"symbol": symbol}
     
     try:
@@ -24,13 +30,29 @@ def get_binance_price(symbol="BTCUSDT"):
         return None
 
 async def send_price_message():
+    global bitcoin_price_0_am
+    global previous_bitcoin_price
+    
     while True:
         bitcoin_price = get_binance_price("BTCUSDT")
-        # etherium_price = get_binance_price("ETHUSDT")
-        message = f"Giá Bitcoin: {bitcoin_price}"
-        # message = f"Giá Bitcoin: {bitcoin_price}  \nGiá Ethereum: {etherium_price}"
-        await bot.send_message(chat_id=chat_id, text=message)
-        await asyncio.sleep(60)  # Sử dụng asyncio.sleep để không chặn luồng
+
+        current_time = datetime.now()
+        zero_am = current_time.replace(hour=0, minute=0, second=0, microsecond=0)
+
+        if bitcoin_price_0_am is None:
+            bitcoin_price_0_am = bitcoin_price
+
+        if previous_bitcoin_price is not None:
+            price_change = bitcoin_price - previous_bitcoin_price
+            if abs(price_change) >= 1:
+                percent_change = (price_change / previous_bitcoin_price) * 100
+                message = f"Giá Bitcoin: {bitcoin_price} USDT\nThay đổi: {percent_change:.2f}%"
+                await bot.send_message(chat_id=chat_id, text=message)
+
+        previous_bitcoin_price = bitcoin_price
+        await asyncio.sleep(1)  # Thay đổi thời gian cần đợi ở đây nếu cần
+
+
 
 # Tạo một luồng riêng biệt để chạy coroutine send_price_message
 def run_send_price_message():
@@ -46,18 +68,20 @@ message_thread.start()
 @app.route('/')
 def display_prices():
     bitcoin_price = get_binance_price("BTCUSDT")
-    etherium_price = get_binance_price("ETHUSDT")
-    return render_template('btcprice2.html', bitcoin_price=bitcoin_price, etherium_price=etherium_price)
+    ethereum_price = get_binance_price("ETHUSDT")
+    return render_template('btcprice2.html', bitcoin_price=bitcoin_price, ethereum_price=ethereum_price)
 
 @app.route('/get_bitcoin_price')
 def get_bitcoin_price_json():
     bitcoin_price = get_binance_price("BTCUSDT")
-    return {'bitcoin_price': bitcoin_price}
+    # Tính phần trăm thay đổi Bitcoin (BTC)
+    percent_change_btc = ((bitcoin_price - bitcoin_price_0_am) / bitcoin_price_0_am) * 100
+    return {'bitcoin_price': bitcoin_price, 'percent_change_btc': percent_change_btc}
 
-@app.route('/get_etherium_price')
-def get_etherium_price_json():
-    etherium_price = get_binance_price("ETHUSDT")
-    return {'etherium_price': etherium_price}
+@app.route('/get_ethereum_price')
+def get_ethereum_price_json():
+    ethereum_price = get_binance_price("ETHUSDT")
+    return {'ethereum_price': ethereum_price}
 
 if __name__ == "__main__":
     app.run(debug=True)
