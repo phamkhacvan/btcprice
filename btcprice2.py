@@ -26,7 +26,7 @@ is_sending = False
 >>>>>>> a4d48a7932d9a98bbc56f987a195a23a399d0e08
 
 def get_binance_price(symbol="BTCUSDT"):
-    base_url = "https://api.binance.com/api/v3/ticker/price"
+    base_url = "https://data.binance.com/api/v3/ticker/price"
     params = {"symbol": symbol}
     
     try:
