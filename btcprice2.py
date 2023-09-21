@@ -113,8 +113,7 @@ def get_etherium_price_json():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-
+    
 @app.route('/')
 def display_prices():
     current_btc_price = get_binance_price("BTCUSDT")
