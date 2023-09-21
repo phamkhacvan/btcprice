@@ -7,23 +7,20 @@ from flask import Flask, render_template
 import asyncio
 import threading
 from datetime import datetime
-<<<<<<< HEAD
-=======
 
->>>>>>> a4d48a7932d9a98bbc56f987a195a23a399d0e08
 
 app = Flask(__name__)
 
 bot = Bot(token="6163331718:AAG7J467TQi53Xie1b9nAnnRP4sbJmlhiOY")
 chat_id = "974909109"
 
-<<<<<<< HEAD
+
 # Biến global để lưu giá Bitcoin từ mốc 0:00
 bitcoin_price_0_am = None
 previous_bitcoin_price = None
-=======
+
 is_sending = False
->>>>>>> a4d48a7932d9a98bbc56f987a195a23a399d0e08
+
 
 def get_binance_price(symbol="BTCUSDT"):
     base_url = "https://data.binance.com/api/v3/ticker/price"
@@ -38,7 +35,6 @@ def get_binance_price(symbol="BTCUSDT"):
         return None
 
 async def send_price_message():
-<<<<<<< HEAD
     global bitcoin_price_0_am
     global previous_bitcoin_price
     
@@ -63,7 +59,6 @@ async def send_price_message():
 
 
 
-=======
     global is_sending  # Sử dụng biến cờ toàn cục
     while True:
         if not is_sending:
@@ -73,7 +68,7 @@ async def send_price_message():
             await bot.send_message(chat_id=chat_id, text=message)
             is_sending = False  # Đánh dấu luồng đã hoàn thành
         await asyncio.sleep(60)
->>>>>>> a4d48a7932d9a98bbc56f987a195a23a399d0e08
+
 # Tạo một luồng riêng biệt để chạy coroutine send_price_message
 def run_send_price_message():
     loop = asyncio.new_event_loop()
@@ -101,8 +96,8 @@ else:
 @app.route('/')
 def display_prices():
     bitcoin_price = get_binance_price("BTCUSDT")
-    ethereum_price = get_binance_price("ETHUSDT")
-    return render_template('btcprice2.html', bitcoin_price=bitcoin_price, ethereum_price=ethereum_price)
+    etherium_price = get_binance_price("ETHUSDT")
+    return render_template('btcprice2.html', bitcoin_price=bitcoin_price, etherium_price=etherium_price)
 
 @app.route('/get_bitcoin_price')
 def get_bitcoin_price_json():
@@ -111,10 +106,10 @@ def get_bitcoin_price_json():
     percent_change_btc = ((bitcoin_price - bitcoin_price_0_am) / bitcoin_price_0_am) * 100
     return {'bitcoin_price': bitcoin_price, 'percent_change_btc': percent_change_btc}
 
-@app.route('/get_ethereum_price')
-def get_ethereum_price_json():
-    ethereum_price = get_binance_price("ETHUSDT")
-    return {'ethereum_price': ethereum_price}
+@app.route('/get_etherium_price')
+def get_etherium_price_json():
+    etherium_price = get_binance_price("ETHUSDT")
+    return {'etherium_price': etherium_price}
 
 if __name__ == "__main__":
     app.run(debug=True)
