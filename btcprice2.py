@@ -113,6 +113,7 @@ def get_etherium_price_json():
 
 if __name__ == "__main__":
     app.run(debug=True)
+    #jjjj
     
 @app.route('/')
 def display_prices():
