@@ -115,17 +115,17 @@ if __name__ == "__main__":
     app.run(debug=True)
     #jjjj
     
-@app.route('/')
-def display_prices():
-    current_btc_price = get_binance_price("BTCUSDT")
-    specific_datetime = datetime(2023, 9, 11, 0, 0)
-    specific_btc_price = get_binance_price("BTCUSDT")
+# @app.route('/')
+# def display_prices():
+#     current_btc_price = get_binance_price("BTCUSDT")
+#     specific_datetime = datetime(2023, 9, 11, 0, 0)
+#     specific_btc_price = get_binance_price("BTCUSDT")
 
-    if specific_btc_price is not None:
-        price_change_percentage = ((current_btc_price - specific_btc_price) / specific_btc_price) * 100
-    else:
-        price_change_percentage = None
+#     if specific_btc_price is not None:
+#         price_change_percentage = ((current_btc_price - specific_btc_price) / specific_btc_price) * 100
+#     else:
+#         price_change_percentage = None
 
-    return render_template('btcprice2.html', bitcoin_price=current_btc_price, change_percentage=price_change_percentage)
+#     return render_template('btcprice2.html', bitcoin_price=current_btc_price, change_percentage=price_change_percentage)
 
 
