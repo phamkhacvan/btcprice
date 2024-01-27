@@ -1,0 +1,17 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "btcprice2.py",
+            "use": "@vercel/python"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "/btcprice2.py"
+        }
+    ]
+}
+
+
